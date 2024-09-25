@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { Select, Button, Card, message, Row, Col } from "antd";
 
-const { Option } = Select;
+import React, { useState } from "react";
+import { Button, Card, message } from "antd";
 
 const App = () => {
   const [stage, setStage] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [skippedCount, setSkippedCount] = useState(0);
   const [selectedValue, setSelectedValue] = useState("");
+  const [isGameOver, setIsGameOver] = useState(false);
 
-  const questions = [
+
+  const initialQuestions = [
     {
       question: "HTML sarlavha tegi qanday ko'rinishda bo'ladi?",
       options: [
@@ -281,98 +282,82 @@ const App = () => {
       correct: "<summary>Ushbu qisqacha ma'lumot</summary>",
     },
   ];
+  // Randomizing questions
+  const shuffleQuestions = (questions) => {
+    return questions.sort(() => Math.random() - 0.5);
+  };
 
+  const [questions, setQuestions] = useState(shuffleQuestions(initialQuestions));
 
-  const handleSubmit = () => {
-    if (selectedValue === "skip") {
-      setSkippedCount(skippedCount + 1);
-      message.info("Bu savolni o'tkazib yubordingiz.");
-    } else if (selectedValue === questions[stage].correct) {
+  const handleAnswer = (isCorrect) => {
+    if (isCorrect) {
       setCorrectCount(correctCount + 1);
       message.success("To'g'ri javob!");
     } else {
       message.error("Xato javob!");
     }
-
-    setSelectedValue(""); // Tanlangan qiymatni tozalash
-
     if (stage < questions.length - 1) {
       setStage(stage + 1);
     } else {
-      console.log(stage);
+      setIsGameOver(true);
     }
+    setSelectedValue(""); // Reset selected value
   };
 
   const handleSkip = () => {
     if (skippedCount < 3) {
       setSkippedCount(skippedCount + 1);
       message.info("Bu savolni o'tkazib yubordingiz.");
-      setSelectedValue(""); // Tanlangan qiymatni tozalash
-
       if (stage < questions.length - 1) {
         setStage(stage + 1);
       } else {
-        console.log(stage);
+        setIsGameOver(true);
       }
     } else {
       message.error("Maksimal o'tkazish soniga yetdingiz.");
     }
   };
 
-  const goToPreviousQuestion = () => {
-    if (stage > 0) {
-      setStage(stage - 1);
-      setSelectedValue(""); // Tanlangan qiymatni tozalash
-    }
-  };
-
-  const goToNextQuestion = () => {
-    if (stage < questions.length - 1) {
-      setStage(stage + 1);
-      setSelectedValue(""); // Tanlangan qiymatni tozalash
-    }
+  const handleRestart = () => {
+    setStage(0);
+    setCorrectCount(0);
+    setSkippedCount(0);
+    setIsGameOver(false);
+    setQuestions(shuffleQuestions(initialQuestions)); // Reshuffle questions
   };
 
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", background: "#f0f2f5" }}>
-      <Card title={`Savol ${stage + 1}: ${questions[stage].question}`} style={{ width: "100%", maxWidth: 500 }}>
-        <Select
-          value={selectedValue}
-          style={{ width: "100%", marginBottom: 20 }}
-          onChange={setSelectedValue}
-        >
-          <Option value="skip">Bu savolni o'tkazib yuborish</Option>
-          {questions[stage].options.map((option, index) => (
-            <Option key={index} value={option}>
-              {option}
-            </Option>
-          ))}
-        </Select>
-        <Button
-          type="primary"
-          onClick={handleSubmit}
-          style={{ marginBottom: 10, width: '100%', backgroundColor: '#4CAF50', color: 'white' }}
-        >
-          Yuborish
-        </Button>
-        <Button
-          onClick={handleSkip}
-          style={{ marginBottom: 10, width: '100%', backgroundColor: 'red', color: 'white' }}
-        >
-          O'tkazib yuborish
-        </Button>
-        <Row gutter={8}>
-          <Col span={12}>
-            <Button onClick={goToPreviousQuestion} disabled={stage === 0} style={{ width: '100%' }}>
-              Orqaga
+      <Card style={{ width: 500 }}>
+        {isGameOver ? (
+          <>
+            <h2>O'yin tugadi!</h2>
+            <p>To'g'ri javoblar: {correctCount}</p>
+            <p>Xato javoblar: {questions.length - correctCount - skippedCount}</p>
+            <Button type="primary" onClick={handleRestart} style={{ marginTop: 20 }}>
+              Qayta boshlash
             </Button>
-          </Col>
-          <Col span={12}>
-            <Button onClick={goToNextQuestion} disabled={stage === questions.length - 1} style={{ width: '100%' }}>
-              Oldinga
+          </>
+        ) : (
+          <>
+            <h2>{`Savol ${stage + 1}: ${questions[stage].question}`}</h2>
+            {questions[stage].options.map((option, index) => (
+              <Button
+                key={index}
+                onClick={() => handleAnswer(option === questions[stage].correct)}
+                style={{ display: 'block', marginBottom: 10, width: '100%', backgroundColor: '#4CAF50', color: 'white' }}
+              >
+                {option}
+              </Button>
+            ))}
+            <Button
+              onClick={handleSkip}
+              style={{ marginBottom: 10, width: '100%', backgroundColor: 'red', color: 'white' }}
+            >
+              O'tkazib yuborish
             </Button>
-          </Col>
-        </Row>
+          </>
+        )}
       </Card>
     </div>
   );
