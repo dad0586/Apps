@@ -1,0 +1,49 @@
+nav {
+    background-color: #356C3F;
+    padding: 12px 0;
+
+    p {
+        font-family: "Europa-Regular";
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 17.74px;
+        letter-spacing: 0.4375px;
+        text-align: center;
+        color: white;
+
+    }
+}
+
+.nav_info {
+    background: #191A19;
+    display: flex;
+
+    .info_inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+
+        .inner_left {
+            display: flex;
+            gap: 5px;
+        }
+
+        .nav_links {
+            gap: 10px;
+            display: flex;
+        }
+    }
+
+    p,
+    a {
+        font-family: "Europa-Regular";
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 16.47px;
+        letter-spacing: 0.40625px;
+        text-align: left;
+        color: white;
+
+    }
+}
