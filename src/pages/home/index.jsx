@@ -1,7 +1,15 @@
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+      <div>
+        <div>
+          <table className="table">
+
+          </table>
+        </div>
+      </div>
+    </>
   )
 }
 
