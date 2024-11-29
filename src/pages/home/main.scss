@@ -1,0 +1,22 @@
+body {
+    background-color: rgb(17, 18, 32);
+    color: white;
+    width: 100%;
+}
+.table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+} 
+table th, td {
+    border-bottom: 1px solid gray;
+    width: 200px;
+    padding: 5px;
+    font-size: 20px;
+    text-align: start;
+}
+table th {
+    background-color: rgb(8, 8, 13);
+}

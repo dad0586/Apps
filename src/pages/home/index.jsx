@@ -1,4 +1,4 @@
-
+import "./main.scss"
 const Home = () => {
   return (
     <>
@@ -6,11 +6,11 @@ const Home = () => {
         <div>
           <table className="table">
             <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>4</th>
+              <th>5</th>
             </tr>
           </table>
         </div>
