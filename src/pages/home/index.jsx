@@ -5,7 +5,13 @@ const Home = () => {
       <div>
         <div>
           <table className="table">
-
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
           </table>
         </div>
       </div>
