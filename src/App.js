@@ -4,6 +4,8 @@ import './assets/styles/main.scss'
 import Home from './pages/home';
 import Header from './components/header';
 import Actor from './pages/actor';
+import TodoApp from './pages/todo';
+import PostsApp from './pages/post';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/actor" element={<Actor/>} />
+          <Route path="/todo" element={<TodoApp/>} />
+          <Route path="/post" element={<PostsApp/>} />
         </Routes>
       </Router>
     </>
