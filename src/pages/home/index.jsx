@@ -2,14 +2,14 @@ import { useEffect, useState } from "react"
 import "./main.scss"
 import axios from "axios"
 const Home = () => {
-  const [data, setData] = useState([])
-  console.log(data);
+  const [products, setProducts] = useState([])
+  console.log(products);
 
 
   useEffect(() => {
-    axios.get('http://localhost:5010/products')
+    axios.get('https://pokeapi.co/api/v2/pokemon/ditto')
       .then((res) => {
-        setData(res?.data)
+        setProducts(res?.products)
 
       })
   }, [])
@@ -27,7 +27,7 @@ const Home = () => {
               <th>4</th>
               <th>5</th>
             </tr>
-            {data?.map((item, i) => (
+            {products?.map((item, i) => (
               <tr key={i}>
                 <th>1</th>
                 <th>2</th>
