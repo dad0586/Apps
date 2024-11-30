@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './assets/styles/main.scss'
 import Home from './pages/home';
 import Header from './components/header';
+import Actor from './pages/actor';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/" element={<Home/>} />
+          <Route path="/actor" element={<Actor/>} />
         </Routes>
       </Router>
     </>
